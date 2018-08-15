@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug>
 #include <QFileDialog>
 #include <QPixmapCache>
 
@@ -11,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     // 设置每次只加入一张图片在缓冲区，多次load在内存中只有一个图片
     QPixmapCache::setCacheLimit(1);
-    image = new QPixmap();
+    ui->image_shower->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 }
 
 MainWindow::~MainWindow()
@@ -23,7 +22,6 @@ void MainWindow::on_image_path_returnPressed()
 {
     QString filename = ui->image_path->text();
     show_image(filename);
-    qDebug() << qPrintable(filename);
 }
 
 void MainWindow::on_open_btn_clicked()
@@ -34,15 +32,14 @@ void MainWindow::on_open_btn_clicked()
     {
         ui->image_path->setText(filename);
         show_image(filename);
-        qDebug() << qPrintable(filename);
-        // debug
-        qDebug() << this->size();
     }
 }
 
 void MainWindow::show_image(QString path)
 {
     //显示图片
-    image->load(path);
-    ui->image_shower->setPixmap(*image);
+    image.load(path);
+    int w = ui->image_shower->width();
+    int h = ui->image_shower->height();
+    ui->image_shower->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
 }

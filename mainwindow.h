@@ -22,7 +22,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QPixmap* image;
+    QPixmap image;
     void show_image(QString path);
 };
 

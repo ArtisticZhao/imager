@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    path_walker.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    path_walker.h
 
 FORMS += \
         mainwindow.ui
