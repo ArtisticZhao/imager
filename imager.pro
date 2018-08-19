@@ -25,7 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    path_walker.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -33,3 +34,6 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui
+
+RESOURCES += \
+    ico.qrc
