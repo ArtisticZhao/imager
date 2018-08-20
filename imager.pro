@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    path_walker.cpp
+    path_walker.cpp \
+    imager_ctrlor.cpp
 
 HEADERS += \
         mainwindow.h \
-    path_walker.h
+    path_walker.h \
+    imager_ctrlor.h
 
 FORMS += \
         mainwindow.ui

@@ -2,17 +2,21 @@
 #include <QApplication>
 #include <QDebug>
 #include "path_walker.h"
+#include "imager_ctrlor.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
     MainWindow w;
     w.show();
-
     path_walker pw;
-//    pw.print_files("E:\\HIT");
     pw.walk_path("C:\\Users\\Artistic Zhao\\Pictures\\Camera Roll");
-    qDebug()<<"----------------------";
+    qDebug()<<"all_paths------------------";
     pw.show_paths();
+    qDebug()<<"----------------------";
+    imager_ctrlor ic(&pw);
+    w.set_imager_ctrlor(&ic);
+
     return a.exec();
 }
