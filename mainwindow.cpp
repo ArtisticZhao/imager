@@ -41,11 +41,15 @@ void MainWindow::on_image_path_returnPressed()
 void MainWindow::on_open_btn_clicked()
 {
     // 在此处打开文件浏览窗口
-    QString filename = QFileDialog::getOpenFileName(this);
-    if(!filename.isEmpty())
+    QString dirname = QFileDialog::getExistingDirectory(this);
+    if(!dirname.isEmpty())
     {
-        ui->image_path->setText(filename);
-        show_image(filename);
+        // TODO: has some problems!
+        qDebug()<<dirname;
+        pw->walk_path(dirname, true);
+        qDebug()<<"done walk!";
+        pw->show_paths();
+        ic->set_img_list(pw->get_img_grp(1));
     }
 }
 

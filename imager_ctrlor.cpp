@@ -3,7 +3,6 @@
 imager_ctrlor::imager_ctrlor(path_walker *pw)
 {
     this->pw = pw;
-    this->set_img_list(pw->get_img_grp(NEXT));
 }
 
 bool imager_ctrlor::set_img_list(QList<QString> *list)
@@ -22,6 +21,7 @@ bool imager_ctrlor::set_img_list(QList<QString> *list)
 
 QString imager_ctrlor::next_pic()
 {
+    qDebug()<<"in";
     qDebug() << index << " " << current_img_list->length();
     if(this->index<this->current_img_list->length()-1){
         this->index++;
