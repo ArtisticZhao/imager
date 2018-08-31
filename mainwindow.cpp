@@ -50,6 +50,8 @@ void MainWindow::on_open_btn_clicked()
         qDebug()<<"done walk!";
         pw->show_paths();
         ic->set_img_list(pw->get_img_grp(1));
+        // 载入第一张
+        this->show_image(this->ic->next_pic());
     }
 }
 

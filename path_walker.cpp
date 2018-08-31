@@ -44,6 +44,8 @@ void path_walker::walk_path(QString root, bool is_first_time)
     if(is_first_time){
         // 当迭代调用开始时，清空列表
         this->all_paths.clear();
+        // 重置计数器
+        this->index = -1;
     }
     QDir dirs(root);
     dirs.setFilter(QDir::Files|QDir::Hidden);
@@ -91,7 +93,7 @@ QList<QString>* path_walker::get_img_grp(int dirct)
             return nullptr;
         }
     }
-    // qDebug()<<this->all_paths[this->index];
+    qDebug()<<this->all_paths[this->index];
     current_files(this->all_paths[this->index]);
     return &this->current_list;
 }
