@@ -23,36 +23,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::set_imager_ctrlor(imager_ctrlor *ic)
 {
-    this->ic = ic;
+    this->img_ctrlor = ic;
 }
 
 void MainWindow::set_path_walker(path_walker *pw)
 {
     this->pw=pw;
-}
-
-
-void MainWindow::on_image_path_returnPressed()
-{
-    QString filename = ui->image_path->text();
-    show_image(filename);
-}
-
-void MainWindow::on_open_btn_clicked()
-{
-    // 在此处打开文件浏览窗口
-    QString dirname = QFileDialog::getExistingDirectory(this);
-    if(!dirname.isEmpty())
-    {
-        // TODO: has some problems!
-        qDebug()<<dirname;
-        pw->walk_path(dirname, true);
-        qDebug()<<"done walk!";
-        pw->show_paths();
-        ic->set_img_list(pw->get_img_grp(1));
-        // 载入第一张
-        this->show_image(this->ic->next_pic());
-    }
 }
 
 void MainWindow::show_image(QString path)
@@ -79,10 +55,58 @@ void MainWindow::show_image(QString path)
 
 void MainWindow::on_right_clicked()
 {
-    show_image(this->ic->next_pic());
+    this->setWindowTitle(this->img_ctrlor->get_album_name());
+    show_image(this->img_ctrlor->next_pic());
 }
 
 void MainWindow::on_left_clicked()
 {
-    show_image(this->ic->pre_pic());
+    this->setWindowTitle(this->img_ctrlor->get_album_name());
+    show_image(this->img_ctrlor->pre_pic());
+}
+
+void MainWindow::on_next_album_clicked()
+{
+    this->setWindowTitle(this->img_ctrlor->get_album_name());
+    this->ui->pre_album->setEnabled(true);
+    if(!this->img_ctrlor->next_album()){
+        this->ui->next_album->setEnabled(false);
+    }
+    show_image(this->img_ctrlor->next_pic());
+}
+
+void MainWindow::on_pre_album_clicked()
+{
+    this->setWindowTitle(this->img_ctrlor->get_album_name());
+    this->ui->next_album->setEnabled(true);
+    if(!this->img_ctrlor->pre_album()){
+        this->ui->pre_album->setEnabled(false);
+    }
+    show_image(this->img_ctrlor->next_pic());
+}
+
+
+void MainWindow::on_open_path_triggered()
+{
+    // 在此处打开文件浏览窗口
+    QString dirname = QFileDialog::getExistingDirectory(this);
+    if(!dirname.isEmpty())
+    {
+        // TODO: has some problems!
+        qDebug()<<"root: "<<dirname;
+        pw->walk_path(dirname, true);
+        // DEBUG
+        qDebug()<<"done walk!";
+        pw->show_paths();
+        qDebug()<<"---------------------";
+        this->img_ctrlor->init_imager_ctrlor();
+        // 解除按钮限制
+        this->ui->left->setEnabled(true);
+        this->ui->right->setEnabled(true);
+        this->ui->pre_album->setEnabled(true);
+        this->ui->next_album->setEnabled(true);
+        // 载入第一张
+        this->show_image(this->img_ctrlor->next_pic());
+        this->setWindowTitle(this->img_ctrlor->get_album_name());
+    }
 }

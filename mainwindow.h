@@ -16,24 +16,27 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void set_imager_ctrlor(imager_ctrlor*);
     void set_path_walker(path_walker*);
 
 private slots:
-    void on_image_path_returnPressed();
-
-    void on_open_btn_clicked();
 
     void on_right_clicked();
 
     void on_left_clicked();
 
+    void on_next_album_clicked();
+
+    void on_pre_album_clicked();
+
+    void on_open_path_triggered();
+
 private:
     Ui::MainWindow *ui;
     QPixmap image;
-    imager_ctrlor *ic;
+    imager_ctrlor *img_ctrlor;
     path_walker *pw;
     void show_image(QString path);
 };

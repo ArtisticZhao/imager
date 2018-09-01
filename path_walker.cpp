@@ -5,14 +5,14 @@ path_walker::path_walker()
 
 }
 
-void path_walker::current_files(QString path)
+const QList<QString> *path_walker::current_files(QString path)
 {
     /*
      * func: 产生图片集,
      * args: path 有文件的文件夹路径
      * returns: 图片(jpg,png,gif)的列表,注意查询是否为空列表!
      */
-    this->current_list.clear();
+    this->current_album_files.clear();
     QDir dir_files(path);
     dir_files.setFilter(QDir::Files|QDir::Hidden);
     dir_files.setSorting(QDir::Name);
@@ -29,10 +29,11 @@ void path_walker::current_files(QString path)
                 (*iter).suffix() == QString("gif")||
                 (*iter).suffix() == QString("GIF")
                 ){
-            this->current_list.append((*iter).filePath());
+            this->current_album_files.append((*iter).filePath());
         }
         iter++;
     }
+    return &this->current_album_files;
 }
 
 void path_walker::walk_path(QString root, bool is_first_time)
@@ -43,9 +44,7 @@ void path_walker::walk_path(QString root, bool is_first_time)
      */
     if(is_first_time){
         // 当迭代调用开始时，清空列表
-        this->all_paths.clear();
-        // 重置计数器
-        this->index = -1;
+        this->album_paths.clear();
     }
     QDir dirs(root);
     dirs.setFilter(QDir::Files|QDir::Hidden);
@@ -55,7 +54,7 @@ void path_walker::walk_path(QString root, bool is_first_time)
     if(file_list.length()>0)
     {
         // exist files
-        this->all_paths.append(root);
+        this->album_paths.append(root);
     }
     dirs.setFilter(QDir::Dirs|QDir::Hidden);
     const QFileInfoList path_list = dirs.entryInfoList();
@@ -64,46 +63,50 @@ void path_walker::walk_path(QString root, bool is_first_time)
         // exist dirs
         QFileInfoList::const_iterator iter = path_list.begin();
         while(iter != path_list.end()){
-
+            //排除 .和..
             if((*iter).fileName() == "." || (*iter).fileName() == "..")
             {
-                //排除 .和..
                 iter++;
                 continue;
             }
-            this->walk_path( (*iter).filePath());
+            this->walk_path((*iter).filePath());
             iter++;
         }
     }
 
 }
 
-QList<QString>* path_walker::get_img_grp(int dirct)
+const QList<QString> *path_walker::get_all_albums()
 {
-    if(dirct == PREVIOUS){
-        if(this->index>0)
-            this->index--;
-        else{
-            return nullptr;
-        }
-    }else{
-        if(this->index<this->all_paths.length()-1)
-            this->index++;
-        else{
-            return nullptr;
-        }
-    }
-    qDebug()<<this->all_paths[this->index];
-    current_files(this->all_paths[this->index]);
-    return &this->current_list;
+    return &this->album_paths;
 }
+
+//QList<QString>* path_walker::get_img_grp(int dirct)
+//{
+//    if(dirct == PREVIOUS){
+//        if(this->index>0)
+//            this->index--;
+//        else{
+//            return nullptr;
+//        }
+//    }else{
+//        if(this->index<this->album_paths.length()-1)
+//            this->index++;
+//        else{
+//            return nullptr;
+//        }
+//    }
+//    qDebug()<<this->album_paths[this->index];
+//    current_files(this->album_paths[this->index]);
+//    return &this->current_album_files;
+//}
 
 
 // debug ...
 void path_walker::show_paths()
 {
-    for(int i=0;i<this->all_paths.length();i++){
-        qDebug()<<all_paths[i];
+    for(int i=0;i<this->album_paths.length();i++){
+        qDebug()<<album_paths[i];
     }
 
 }

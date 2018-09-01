@@ -10,25 +10,19 @@
 
 #include <QDir>
 
-#define PREVIOUS 0
-#define NEXT 1
-
 class path_walker
 {
 private:
-    QString current_path;
-    QList<QString> all_paths;
-
-    int index=-1;
+    QList<QString> album_paths;
+    QList<QString> current_album_files;
 public:
-    QList<QString> current_list;
     path_walker();
-    // 产生图片集
-    void current_files(QString path);
-    // 迭代查询数据
+    // 返回图片集
+    const QList<QString>* current_files(QString path);
+    // 迭代查询数据, 数据将被保存在all_paths中
     void walk_path(QString root, bool is_first_time=false);
     // 得到列表
-    QList<QString>* get_img_grp(int);
+    const QList<QString>* get_all_albums();
     // debug
     void show_paths();
 };

@@ -10,17 +10,32 @@
 #include <QList>
 #include "path_walker.h"
 
+#define PREVIOUS 0
+#define NEXT 1
+
 class imager_ctrlor
 {
-public:
-    imager_ctrlor(path_walker *pw);
-    bool set_img_list(QList<QString> *list);
-    QString next_pic();
-    QString pre_pic();
 private:
     path_walker *pw;
-    QList<QString> *current_img_list;
-    int index=0;
+    const QList<QString> *album_paths;
+    const QList<QString> *current_img_list;
+    int album_index=0;
+    int img_index=0;
+    int current_len=0;
+    int album_len=0;
+    QString album_name;
+
+    bool set_img_list(int direct);
+
+public:
+    imager_ctrlor(path_walker *pw);
+    void init_imager_ctrlor();
+    QString get_album_name();
+    // entry
+    bool pre_album();
+    bool next_album();
+    QString next_pic();
+    QString pre_pic();
 };
 
 #endif // IMAGER_CTRLOR_H
