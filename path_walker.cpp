@@ -35,12 +35,18 @@ void path_walker::current_files(QString path)
     }
 }
 
-void path_walker::walk_path(QString root)
+void path_walker::walk_path(QString root, bool is_first_time)
 {
     /* func: list all path with pictures
      * args: root
      * return: list of path
      */
+    if(is_first_time){
+        // 当迭代调用开始时，清空列表
+        this->all_paths.clear();
+        // 重置计数器
+        this->index = -1;
+    }
     QDir dirs(root);
     dirs.setFilter(QDir::Files|QDir::Hidden);
     dirs.setSorting(QDir::Name);
@@ -92,6 +98,8 @@ QList<QString>* path_walker::get_img_grp(int dirct)
     return &this->current_list;
 }
 
+
+// debug ...
 void path_walker::show_paths()
 {
     for(int i=0;i<this->all_paths.length();i++){

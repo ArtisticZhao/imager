@@ -3,7 +3,6 @@
 imager_ctrlor::imager_ctrlor(path_walker *pw)
 {
     this->pw = pw;
-    this->set_img_list(pw->get_img_grp(NEXT));
 }
 
 bool imager_ctrlor::set_img_list(QList<QString> *list)
@@ -15,6 +14,8 @@ bool imager_ctrlor::set_img_list(QList<QString> *list)
     if(list != nullptr)
     {
         this->current_img_list = list;
+        // 重置计数器
+        this->index = 0;
         return true;
     }else
         return false;
@@ -22,7 +23,7 @@ bool imager_ctrlor::set_img_list(QList<QString> *list)
 
 QString imager_ctrlor::next_pic()
 {
-    qDebug() << index << " " << current_img_list->length();
+    qDebug() << "->" << index << " " << current_img_list->length();
     if(this->index<this->current_img_list->length()-1){
         this->index++;
     }else{
@@ -37,8 +38,8 @@ QString imager_ctrlor::next_pic()
 
 QString imager_ctrlor::pre_pic()
 {
+    qDebug() << "<-" << index << " " << current_img_list->length();
     if(this->index > 0){
-
         this->index--;
     }else{
         // 上一组

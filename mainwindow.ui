@@ -31,7 +31,7 @@
     <item row="2" column="2">
      <widget class="QPushButton" name="right">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="text">
        <string>-&gt;</string>
@@ -64,7 +64,7 @@
     <item row="2" column="1">
      <widget class="QPushButton" name="left">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="styleSheet">
        <string notr="true"/>

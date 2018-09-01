@@ -26,7 +26,7 @@ public:
     // 产生图片集
     void current_files(QString path);
     // 迭代查询数据
-    void walk_path(QString root);
+    void walk_path(QString root, bool is_first_time=false);
     // 得到列表
     QList<QString>* get_img_grp(int);
     // debug
