@@ -33,16 +33,36 @@ void MainWindow::set_path_walker(path_walker *pw)
 
 void MainWindow::show_image(QString path)
 {
+    /**
+     * 如果输入的后缀名为.gif则使用QMovie播放
+     **/
     // debug
     qDebug()<<path;
     // 显示图片
     if(QString::compare(path, QString("tail")) && QString::compare(path, QString("head"))){
         ui->right->setDisabled(false);
         ui->left->setDisabled(false);
-        image.load(path);
         int w = ui->image_shower->width();
         int h = ui->image_shower->height();
-        ui->image_shower->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
+        if(!QString::compare(path.mid(path.lastIndexOf('.')+1), QString("gif"))||
+                !QString::compare(path.mid(path.lastIndexOf('.')+1), QString("GIF"))){
+            // play gif
+            if(this->gif != nullptr){
+                delete this->gif;
+            }
+            // get size
+            image.load(path);
+
+            this->gif = new QMovie(path);
+            this->gif->stop();
+            // 自适应窗口
+            this->gif->setScaledSize(this->image.size().scaled(w,h,Qt::KeepAspectRatio));
+            this->ui->image_shower->setMovie(this->gif);
+            this->gif->start();
+        }else{
+            image.load(path);
+            ui->image_shower->setPixmap(image.scaled(w,h,Qt::KeepAspectRatio));
+        }
     }else if(path == QString("tail")){
         ui->image_shower->setText("已经是最后一张了!");
         ui->right->setDisabled(true);
@@ -50,7 +70,6 @@ void MainWindow::show_image(QString path)
         ui->image_shower->setText("已经是第一张了!");
         ui->left->setDisabled(true);
     }
-
 }
 
 void MainWindow::on_right_clicked()

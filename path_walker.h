@@ -9,12 +9,14 @@
  */
 
 #include <QDir>
+#include <QDebug>
 
 class path_walker
 {
 private:
     QList<QString> album_paths;
     QList<QString> current_album_files;
+    bool has_image(const QFileInfoList* qfl);
 public:
     path_walker();
     // 返回图片集

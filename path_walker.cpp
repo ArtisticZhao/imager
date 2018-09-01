@@ -1,5 +1,28 @@
 #include "path_walker.h"
-#include <QDebug>
+
+bool path_walker::has_image(const QFileInfoList *qfl)
+{
+    /**
+     * 判断是否存在图片格式
+     */
+    QFileInfoList::const_iterator iter = qfl->begin();
+    while(iter != qfl->end())
+    {
+        // 判断文件类型
+        if((*iter).suffix() == QString("jpg") ||
+                (*iter).suffix() == QString("JPG")||
+                (*iter).suffix() == QString("png")||
+                (*iter).suffix() == QString("PNG")||
+                (*iter).suffix() == QString("gif")||
+                (*iter).suffix() == QString("GIF")
+                ){
+            return true;
+        }
+        iter++;
+    }
+    return false;
+}
+
 path_walker::path_walker()
 {
 
@@ -54,7 +77,10 @@ void path_walker::walk_path(QString root, bool is_first_time)
     if(file_list.length()>0)
     {
         // exist files
-        this->album_paths.append(root);
+        if(this->has_image(&file_list)){
+            // exist image file type
+            this->album_paths.append(root);
+        }
     }
     dirs.setFilter(QDir::Dirs|QDir::Hidden);
     const QFileInfoList path_list = dirs.entryInfoList();

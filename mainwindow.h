@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPixmap>
+#include <QMovie>
 
 #include "imager_ctrlor.h"
 #include "path_walker.h"
@@ -36,6 +37,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QPixmap image;
+    QMovie *gif=nullptr;
     imager_ctrlor *img_ctrlor;
     path_walker *pw;
     void show_image(QString path);

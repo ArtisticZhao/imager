@@ -117,6 +117,9 @@
       <property name="text">
        <string>请设置路径</string>
       </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
