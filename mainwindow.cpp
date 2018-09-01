@@ -55,34 +55,34 @@ void MainWindow::show_image(QString path)
 
 void MainWindow::on_right_clicked()
 {
-    this->setWindowTitle(this->img_ctrlor->get_album_name());
     show_image(this->img_ctrlor->next_pic());
+    this->setWindowTitle(this->img_ctrlor->get_album_name());
 }
 
 void MainWindow::on_left_clicked()
 {
-    this->setWindowTitle(this->img_ctrlor->get_album_name());
     show_image(this->img_ctrlor->pre_pic());
+    this->setWindowTitle(this->img_ctrlor->get_album_name());
 }
 
 void MainWindow::on_next_album_clicked()
 {
-    this->setWindowTitle(this->img_ctrlor->get_album_name());
     this->ui->pre_album->setEnabled(true);
     if(!this->img_ctrlor->next_album()){
         this->ui->next_album->setEnabled(false);
     }
     show_image(this->img_ctrlor->next_pic());
+    this->setWindowTitle(this->img_ctrlor->get_album_name());
 }
 
 void MainWindow::on_pre_album_clicked()
 {
-    this->setWindowTitle(this->img_ctrlor->get_album_name());
     this->ui->next_album->setEnabled(true);
     if(!this->img_ctrlor->pre_album()){
         this->ui->pre_album->setEnabled(false);
     }
     show_image(this->img_ctrlor->next_pic());
+    this->setWindowTitle(this->img_ctrlor->get_album_name());
 }
 
 

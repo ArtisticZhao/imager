@@ -19,7 +19,7 @@ bool imager_ctrlor::set_img_list(int direct)
     if(is_success){
         this->current_img_list = this->pw->current_files(this->album_paths->at(this->album_index));
         this->current_len = this->current_img_list->length();
-        // TODO: 以目录名作为相册名字
+        // 以目录名作为相册名字
         this->album_name = this->album_paths->at(this->album_index).mid(this->album_paths->at(this->album_index).lastIndexOf('/')+1);
     }
     return is_success;
@@ -70,8 +70,8 @@ QString imager_ctrlor::next_pic()
         else
             return QString("tail");
     }
-    qDebug()<<"album: "<<this->album_index<<"/"<<this->album_len;
-    qDebug()<<"->"<<this->img_index<<"/"<<this->current_len;
+    qDebug()<<"album: "<<this->album_index+1<<"/"<<this->album_len;
+    qDebug()<<"->"<<this->img_index+1<<"/"<<this->current_len;
     return (*this->current_img_list)[this->img_index];
 }
 
@@ -89,7 +89,7 @@ QString imager_ctrlor::pre_pic()
             this->img_index=-1;
             return QString("head");
     }
-    qDebug()<<"album: "<<this->album_index<<"/"<<this->album_len;
-    qDebug()<<"<-"<< this->img_index<<"/"<<this->current_len;
+    qDebug()<<"album: "<<this->album_index+1<<"/"<<this->album_len;
+    qDebug()<<"<-"<< this->img_index+1<<"/"<<this->current_len;
     return (*this->current_img_list)[this->img_index];
 }
