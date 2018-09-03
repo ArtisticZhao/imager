@@ -75,13 +75,19 @@ void MainWindow::show_image(QString path)
 void MainWindow::on_right_clicked()
 {
     show_image(this->img_ctrlor->next_pic());
+    // update title
     this->setWindowTitle(this->img_ctrlor->get_album_name());
+    // update tags
+    this->ui->tags_edit->setText(this->pw->get_tags(this->img_ctrlor->get_current_path()));
 }
 
 void MainWindow::on_left_clicked()
 {
     show_image(this->img_ctrlor->pre_pic());
+    // update title
     this->setWindowTitle(this->img_ctrlor->get_album_name());
+    // update tags
+    this->ui->tags_edit->setText(this->pw->get_tags(this->img_ctrlor->get_current_path()));
 }
 
 void MainWindow::on_next_album_clicked()
@@ -91,7 +97,10 @@ void MainWindow::on_next_album_clicked()
         this->ui->next_album->setEnabled(false);
     }
     show_image(this->img_ctrlor->next_pic());
+    // update title
     this->setWindowTitle(this->img_ctrlor->get_album_name());
+    // update tags
+    this->ui->tags_edit->setText(this->pw->get_tags(this->img_ctrlor->get_current_path()));
 }
 
 void MainWindow::on_pre_album_clicked()
@@ -101,7 +110,10 @@ void MainWindow::on_pre_album_clicked()
         this->ui->pre_album->setEnabled(false);
     }
     show_image(this->img_ctrlor->next_pic());
+    // update title
     this->setWindowTitle(this->img_ctrlor->get_album_name());
+    // update tags
+    this->ui->tags_edit->setText(this->pw->get_tags(this->img_ctrlor->get_current_path()));
 }
 
 
@@ -129,4 +141,11 @@ void MainWindow::on_open_path_triggered()
         this->show_image(this->img_ctrlor->next_pic());
         this->setWindowTitle(this->img_ctrlor->get_album_name());
     }
+}
+
+void MainWindow::on_tags_edit_returnPressed()
+{
+    this->pw->save_tags(this->img_ctrlor->get_current_path(), this->ui->tags_edit->text());
+    // 丢失文本框焦点
+    this->ui->tags_edit->clearFocus();
 }

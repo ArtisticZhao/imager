@@ -29,6 +29,10 @@ public:
     const QList<QString>* get_all_albums();
     // 将当前扫描结果保存到数据库
     void save_albums();
+    // 读取标签信息
+    QString get_tags(const QString& path);
+    // 变更标签信息
+    void save_tags(const QString& path, const QString& tags);
     // debug
     void show_paths();
 };

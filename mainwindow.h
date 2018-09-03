@@ -34,6 +34,8 @@ private slots:
 
     void on_open_path_triggered();
 
+    void on_tags_edit_returnPressed();
+
 private:
     Ui::MainWindow *ui;
     QPixmap image;

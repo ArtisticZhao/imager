@@ -93,3 +93,8 @@ QString imager_ctrlor::pre_pic()
     qDebug()<<"<-"<< this->img_index+1<<"/"<<this->current_len;
     return (*this->current_img_list)[this->img_index];
 }
+
+QString imager_ctrlor::get_current_path()
+{
+    return  this->album_paths->at(this->album_index);
+}

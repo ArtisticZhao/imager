@@ -36,6 +36,8 @@ public:
     bool next_album();
     QString next_pic();
     QString pre_pic();
+
+    QString get_current_path();
 };
 
 #endif // IMAGER_CTRLOR_H

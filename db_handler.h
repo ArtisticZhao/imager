@@ -17,6 +17,7 @@ public:
     db_handler();
 
     bool check_insert(const QString& path);
+    QString get_tags(const QString& path);
     bool set_tags(const QString& path, const QString& tags);
     // debug test
     void show_all_rec();

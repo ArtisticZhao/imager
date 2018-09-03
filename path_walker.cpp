@@ -117,25 +117,17 @@ void path_walker::save_albums()
     this->db.show_all_rec();
 }
 
-//QList<QString>* path_walker::get_img_grp(int dirct)
-//{
-//    if(dirct == PREVIOUS){
-//        if(this->index>0)
-//            this->index--;
-//        else{
-//            return nullptr;
-//        }
-//    }else{
-//        if(this->index<this->album_paths.length()-1)
-//            this->index++;
-//        else{
-//            return nullptr;
-//        }
-//    }
-//    qDebug()<<this->album_paths[this->index];
-//    current_files(this->album_paths[this->index]);
-//    return &this->current_album_files;
-//}
+QString path_walker::get_tags(const QString &path)
+{
+    return this->db.get_tags(path);
+}
+
+void path_walker::save_tags(const QString &path, const QString &tags)
+{
+    this->db.set_tags(path, tags);
+    qDebug()<<"save to:"<<path<<"--"<<tags;
+}
+
 
 
 // debug ...

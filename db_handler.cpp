@@ -77,9 +77,41 @@ bool db_handler::check_insert(const QString& path)
     return success;
 }
 
+QString db_handler::get_tags(const QString &path)
+{
+    qDebug()<<"get tags:"<<path;
+    QSqlQuery query;
+    query.prepare("SELECT tags FROM img_list WHERE path = (:path)");
+    query.bindValue(":path", path);
+    if(query.exec()){
+        if(query.next()){
+            qDebug()<<"tags: "<<query.value(0).toString();
+            return query.value(0).toString();
+        }
+    }
+    else{
+        qDebug() << "insert error:  "
+                 << query.lastError();
+    }
+
+    return "";
+}
+
 bool db_handler::set_tags(const QString &path, const QString &tags)
 {
-
+    bool success = false;
+    QSqlQuery query;
+    query.prepare("UPDATE img_list SET tags = (:tags) WHERE path = (:path)");
+    query.bindValue(":path", path);
+    query.bindValue(":tags", tags);
+    if(query.exec()){
+       success = true;
+    }
+    else{
+        qDebug() << "insert error:  "
+                 << query.lastError();
+    }
+    return  success;
 }
 
 void db_handler::show_all_rec()
