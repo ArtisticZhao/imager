@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-
+QT       += sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = imager
@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     path_walker.cpp \
-    imager_ctrlor.cpp
+    imager_ctrlor.cpp \
+    db_handler.cpp
 
 HEADERS += \
         mainwindow.h \
     path_walker.h \
-    imager_ctrlor.h
+    imager_ctrlor.h \
+    db_handler.h
 
 FORMS += \
         mainwindow.ui

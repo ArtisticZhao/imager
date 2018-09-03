@@ -10,12 +10,14 @@
 
 #include <QDir>
 #include <QDebug>
+#include "db_handler.h"
 
 class path_walker
 {
 private:
     QList<QString> album_paths;
     QList<QString> current_album_files;
+    db_handler db;
     bool has_image(const QFileInfoList* qfl);
 public:
     path_walker();
@@ -25,6 +27,8 @@ public:
     void walk_path(QString root, bool is_first_time=false);
     // 得到列表
     const QList<QString>* get_all_albums();
+    // 将当前扫描结果保存到数据库
+    void save_albums();
     // debug
     void show_paths();
 };

@@ -114,6 +114,7 @@ void MainWindow::on_open_path_triggered()
         // TODO: has some problems!
         qDebug()<<"root: "<<dirname;
         pw->walk_path(dirname, true);
+        pw->save_albums();
         // DEBUG
         qDebug()<<"done walk!";
         pw->show_paths();

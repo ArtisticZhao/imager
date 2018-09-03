@@ -107,6 +107,16 @@ const QList<QString> *path_walker::get_all_albums()
     return &this->album_paths;
 }
 
+void path_walker::save_albums()
+{
+    for(int i=0;i<this->album_paths.length();i++){
+        this->db.check_insert(this->album_paths.at(i));
+    }
+    // debug
+    qDebug()<<"show db record:";
+    this->db.show_all_rec();
+}
+
 //QList<QString>* path_walker::get_img_grp(int dirct)
 //{
 //    if(dirct == PREVIOUS){
