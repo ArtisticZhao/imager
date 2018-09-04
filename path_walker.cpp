@@ -140,3 +140,8 @@ void path_walker::show_paths()
 
 }
 
+void path_walker::test_get_by_tags()
+{
+    this->db.get_by_tags(&this->album_paths, "星空,壁纸");
+}
+

@@ -37,6 +37,7 @@ public:
     void save_tags(const QString& path, const QString& tags);
     // debug
     void show_paths();
+    void test_get_by_tags();
 };
 
 #endif // PATH_WALKER_H

@@ -13,12 +13,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // 设置每次只加入一张图片在缓冲区，多次load在内存中只有一个图片
     QPixmapCache::setCacheLimit(1);
     ui->image_shower->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    // 设置状态栏信息显示画布
-    this->permanent=new QLabel(this);
-    this->permanent->setFrameStyle(QFrame::Box|QFrame::Sunken);
-    this->permanent->setText("imager is online!");
-    ui->statusBar->addPermanentWidget(this->permanent);//显示永久信息
-
 }
 
 MainWindow::~MainWindow()

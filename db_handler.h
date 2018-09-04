@@ -20,6 +20,7 @@ public:
     void get_all_path(QList<QString> *path_walker_album_list);
     QString get_tags(const QString& path);
     bool set_tags(const QString& path, const QString& tags);
+    void get_by_tags(QList<QString> *path_walker_album_list, QString tags);
     // debug test
     void show_all_rec();
 };

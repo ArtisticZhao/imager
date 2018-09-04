@@ -14,5 +14,6 @@ int main(int argc, char *argv[])
     imager_ctrlor ic(&pw);
     w.set_imager_ctrlor(&ic);
     w.set_path_walker(&pw);
+    pw.test_get_by_tags();
     return a.exec();
 }

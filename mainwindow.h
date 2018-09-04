@@ -40,7 +40,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QLabel *permanent;
     QPixmap image;
     QMovie *gif=nullptr;
     imager_ctrlor *img_ctrlor;

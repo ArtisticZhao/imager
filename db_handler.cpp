@@ -127,6 +127,35 @@ bool db_handler::set_tags(const QString &path, const QString &tags)
     return  success;
 }
 
+void db_handler::get_by_tags(QList<QString> *path_walker_album_list, QString tags)
+{
+    QStringList tag_list=tags.split(",");
+    qDebug()<<tag_list;
+    if(tag_list.length()>0){
+        // 如果tag_list 包含结果, 结果按照 'and' 关系 进行查询!
+        path_walker_album_list->clear();
+        QSqlQuery query;
+        QString query_str = "SELECT path from img_list WHERE tags LIKE '%%1%'";
+        QString add_str = " and tags LIKE '%%1%'";
+        query_str = query_str.arg(tag_list.at(0));
+        // 拼接字符串
+        for(int i=1;i<tag_list.length();i++){
+            query_str += add_str.arg(tag_list.at(i));
+        }
+        qDebug()<<query_str;
+        query.prepare(query_str);
+        if(query.exec()){
+            while(query.next()){
+                path_walker_album_list->append(query.value(0).toString());
+            }
+        }
+    }else{
+        // 如果列表为空则返回全部数据库结果
+        this->get_all_path(path_walker_album_list);
+    }
+
+}
+
 void db_handler::show_all_rec()
 {
     QSqlQuery sql_query;
