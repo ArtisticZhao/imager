@@ -67,8 +67,9 @@ QString imager_ctrlor::next_pic()
         if(this->set_img_list(NEXT))
             // 索引指向下一组的列表头
             img_index = 0;
-        else
+        else{
             return QString("tail");
+        }
     }
     qDebug()<<"album: "<<this->album_index+1<<"/"<<this->album_len;
     qDebug()<<"->"<<this->img_index+1<<"/"<<this->current_len;
@@ -85,9 +86,10 @@ QString imager_ctrlor::pre_pic()
         if(this->set_img_list(PREVIOUS))
             // 索引指向下一组的列表尾
             this->img_index = this->current_len-1;
-        else
+        else{
             this->img_index=-1;
             return QString("head");
+        }
     }
     qDebug()<<"album: "<<this->album_index+1<<"/"<<this->album_len;
     qDebug()<<"<-"<< this->img_index+1<<"/"<<this->current_len;

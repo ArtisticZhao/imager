@@ -79,13 +79,11 @@ bool db_handler::check_insert(const QString& path)
 
 QString db_handler::get_tags(const QString &path)
 {
-    qDebug()<<"get tags:"<<path;
     QSqlQuery query;
     query.prepare("SELECT tags FROM img_list WHERE path = (:path)");
     query.bindValue(":path", path);
     if(query.exec()){
         if(query.next()){
-            qDebug()<<"tags: "<<query.value(0).toString();
             return query.value(0).toString();
         }
     }
