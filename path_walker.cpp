@@ -102,6 +102,11 @@ void path_walker::walk_path(QString root, bool is_first_time)
 
 }
 
+void path_walker::load_all_from_database()
+{
+    this->db.get_all_path(&this->album_paths);
+}
+
 const QList<QString> *path_walker::get_all_albums()
 {
     return &this->album_paths;
@@ -112,9 +117,6 @@ void path_walker::save_albums()
     for(int i=0;i<this->album_paths.length();i++){
         this->db.check_insert(this->album_paths.at(i));
     }
-    // debug
-    qDebug()<<"show db record:";
-    this->db.show_all_rec();
 }
 
 QString path_walker::get_tags(const QString &path)
@@ -125,7 +127,6 @@ QString path_walker::get_tags(const QString &path)
 void path_walker::save_tags(const QString &path, const QString &tags)
 {
     this->db.set_tags(path, tags);
-    qDebug()<<"save to:"<<path<<"--"<<tags;
 }
 
 

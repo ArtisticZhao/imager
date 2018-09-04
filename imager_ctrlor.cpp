@@ -100,3 +100,9 @@ QString imager_ctrlor::get_current_path()
 {
     return  this->album_paths->at(this->album_index);
 }
+
+QString imager_ctrlor::get_current_info()
+{
+    QString info = "Album:%1/%2 | image:%3/%4  |%5";
+    return info.arg(this->album_index+1).arg(this->album_len).arg(this->img_index+1).arg(this->current_len).arg((*this->current_img_list)[this->img_index]);
+}

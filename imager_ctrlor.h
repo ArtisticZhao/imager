@@ -38,6 +38,7 @@ public:
     QString pre_pic();
 
     QString get_current_path();
+    QString get_current_info();
 };
 
 #endif // IMAGER_CTRLOR_H

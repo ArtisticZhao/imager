@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QPixmap>
 #include <QMovie>
-
+#include <QLabel>
 #include "imager_ctrlor.h"
 #include "path_walker.h"
 
@@ -36,13 +36,20 @@ private slots:
 
     void on_tags_edit_returnPressed();
 
+    void on_open_database_triggered();
+
 private:
     Ui::MainWindow *ui;
+    QLabel *permanent;
     QPixmap image;
     QMovie *gif=nullptr;
     imager_ctrlor *img_ctrlor;
     path_walker *pw;
+
     void show_image(QString path);
+    void updata_statusbar();
+    void updata_all_info();
+    void todo_after_path_walk();
 };
 
 #endif // MAINWINDOW_H

@@ -25,6 +25,8 @@ public:
     const QList<QString>* current_files(QString path);
     // 迭代查询数据, 数据将被保存在all_paths中
     void walk_path(QString root, bool is_first_time=false);
+    // 从数据库中读取全部结果
+    void load_all_from_database();
     // 得到列表
     const QList<QString>* get_all_albums();
     // 将当前扫描结果保存到数据库

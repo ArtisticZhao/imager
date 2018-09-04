@@ -126,7 +126,11 @@
      </layout>
     </item>
     <item row="2" column="0">
-     <widget class="QLineEdit" name="tags_edit"/>
+     <widget class="QLineEdit" name="tags_edit">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -144,6 +148,7 @@
      <string>文件</string>
     </property>
     <addaction name="open_path"/>
+    <addaction name="open_database"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -162,6 +167,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="open_database">
+   <property name="text">
+    <string>从数据库中打开</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
  </widget>

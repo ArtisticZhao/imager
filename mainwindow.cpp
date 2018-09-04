@@ -13,6 +13,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // 设置每次只加入一张图片在缓冲区，多次load在内存中只有一个图片
     QPixmapCache::setCacheLimit(1);
     ui->image_shower->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    // 设置状态栏信息显示画布
+    this->permanent=new QLabel(this);
+    this->permanent->setFrameStyle(QFrame::Box|QFrame::Sunken);
+    this->permanent->setText("imager is online!");
+    ui->statusBar->addPermanentWidget(this->permanent);//显示永久信息
 
 }
 
@@ -72,22 +77,46 @@ void MainWindow::show_image(QString path)
     }
 }
 
+void MainWindow::updata_statusbar()
+{
+    this->ui->statusBar->showMessage(this->img_ctrlor->get_current_info());
+}
+
+void MainWindow::updata_all_info()
+{
+    // 更新标题
+    this->setWindowTitle(this->img_ctrlor->get_album_name());
+    // 更新标签栏
+    this->ui->tags_edit->setText(this->pw->get_tags(this->img_ctrlor->get_current_path()));
+    // 更新状态栏
+    this->updata_statusbar();
+}
+
+void MainWindow::todo_after_path_walk()
+{
+    // 当path_walk 执行完毕后要调用这些内容
+    this->img_ctrlor->init_imager_ctrlor();
+    // 解除按钮限制
+    this->ui->left->setEnabled(true);
+    this->ui->right->setEnabled(true);
+    this->ui->pre_album->setEnabled(true);
+    this->ui->next_album->setEnabled(true);
+    this->ui->tags_edit->setEnabled(true);
+    // 载入第一张
+    this->show_image(this->img_ctrlor->next_pic());
+    this->updata_all_info();
+}
+
 void MainWindow::on_right_clicked()
 {
     show_image(this->img_ctrlor->next_pic());
-    // update title
-    this->setWindowTitle(this->img_ctrlor->get_album_name());
-    // update tags
-    this->ui->tags_edit->setText(this->pw->get_tags(this->img_ctrlor->get_current_path()));
+    this->updata_all_info();
 }
 
 void MainWindow::on_left_clicked()
 {
     show_image(this->img_ctrlor->pre_pic());
-    // update title
-    this->setWindowTitle(this->img_ctrlor->get_album_name());
-    // update tags
-    this->ui->tags_edit->setText(this->pw->get_tags(this->img_ctrlor->get_current_path()));
+    this->updata_all_info();
 }
 
 void MainWindow::on_next_album_clicked()
@@ -97,10 +126,7 @@ void MainWindow::on_next_album_clicked()
         this->ui->next_album->setEnabled(false);
     }
     show_image(this->img_ctrlor->next_pic());
-    // update title
-    this->setWindowTitle(this->img_ctrlor->get_album_name());
-    // update tags
-    this->ui->tags_edit->setText(this->pw->get_tags(this->img_ctrlor->get_current_path()));
+    this->updata_all_info();
 }
 
 void MainWindow::on_pre_album_clicked()
@@ -110,10 +136,7 @@ void MainWindow::on_pre_album_clicked()
         this->ui->pre_album->setEnabled(false);
     }
     show_image(this->img_ctrlor->next_pic());
-    // update title
-    this->setWindowTitle(this->img_ctrlor->get_album_name());
-    // update tags
-    this->ui->tags_edit->setText(this->pw->get_tags(this->img_ctrlor->get_current_path()));
+    this->updata_all_info();
 }
 
 
@@ -123,23 +146,10 @@ void MainWindow::on_open_path_triggered()
     QString dirname = QFileDialog::getExistingDirectory(this);
     if(!dirname.isEmpty())
     {
-        // TODO: has some problems!
-        qDebug()<<"root: "<<dirname;
         pw->walk_path(dirname, true);
+        // done walk and save to database
         pw->save_albums();
-        // DEBUG
-        qDebug()<<"done walk!";
-        pw->show_paths();
-        qDebug()<<"---------------------";
-        this->img_ctrlor->init_imager_ctrlor();
-        // 解除按钮限制
-        this->ui->left->setEnabled(true);
-        this->ui->right->setEnabled(true);
-        this->ui->pre_album->setEnabled(true);
-        this->ui->next_album->setEnabled(true);
-        // 载入第一张
-        this->show_image(this->img_ctrlor->next_pic());
-        this->setWindowTitle(this->img_ctrlor->get_album_name());
+        this->todo_after_path_walk();
     }
 }
 
@@ -148,4 +158,11 @@ void MainWindow::on_tags_edit_returnPressed()
     this->pw->save_tags(this->img_ctrlor->get_current_path(), this->ui->tags_edit->text());
     // 丢失文本框焦点
     this->ui->tags_edit->clearFocus();
+    this->ui->statusBar->showMessage("更新标签信息", 1500);
+}
+
+void MainWindow::on_open_database_triggered()
+{
+    this->pw->load_all_from_database();
+    this->todo_after_path_walk();
 }

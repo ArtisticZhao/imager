@@ -77,6 +77,21 @@ bool db_handler::check_insert(const QString& path)
     return success;
 }
 
+void db_handler::get_all_path(QList<QString> *path_walker_album_list)
+{
+    path_walker_album_list->clear();
+    QSqlQuery query;
+    query.prepare("SELECT path FROM img_list");
+    if(query.exec()){
+        while(query.next()){
+            path_walker_album_list->append(query.value(0).toString());
+        }
+    }else{
+        qDebug() << "insert error:  "
+                 << query.lastError();
+    }
+}
+
 QString db_handler::get_tags(const QString &path)
 {
     QSqlQuery query;
