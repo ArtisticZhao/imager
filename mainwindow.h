@@ -38,6 +38,8 @@ private slots:
 
     void on_open_database_triggered();
 
+    void on_tags_select_returnPressed();
+
 private:
     Ui::MainWindow *ui;
     QPixmap image;

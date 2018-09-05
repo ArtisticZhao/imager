@@ -129,6 +129,11 @@ void path_walker::save_tags(const QString &path, const QString &tags)
     this->db.set_tags(path, tags);
 }
 
+void path_walker::get_by_tags(const QString &tags)
+{
+    this->db.get_by_tags(&this->album_paths, tags);
+}
+
 
 
 // debug ...
@@ -139,9 +144,3 @@ void path_walker::show_paths()
     }
 
 }
-
-void path_walker::test_get_by_tags()
-{
-    this->db.get_by_tags(&this->album_paths, "星空,壁纸");
-}
-

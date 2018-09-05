@@ -1,5 +1,8 @@
 <RCC>
-    <qresource prefix="/new/prefix1">
-        <file>res/箭头 (1).png</file>
+    <qresource prefix="/">
+        <file>res/向右三角形.png</file>
+        <file>res/向左三角形.png</file>
+        <file>res/右箭头.png</file>
+        <file>res/左箭头.png</file>
     </qresource>
 </RCC>

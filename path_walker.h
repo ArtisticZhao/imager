@@ -35,9 +35,11 @@ public:
     QString get_tags(const QString& path);
     // 变更标签信息
     void save_tags(const QString& path, const QString& tags);
+    // 根据标签得到paths
+    void get_by_tags(const QString& tags);
     // debug
     void show_paths();
-    void test_get_by_tags();
+
 };
 
 #endif // PATH_WALKER_H

@@ -96,6 +96,7 @@ void MainWindow::todo_after_path_walk()
     this->ui->pre_album->setEnabled(true);
     this->ui->next_album->setEnabled(true);
     this->ui->tags_edit->setEnabled(true);
+    this->ui->tags_select->setEnabled(true);
     // 载入第一张
     this->show_image(this->img_ctrlor->next_pic());
     this->updata_all_info();
@@ -158,5 +159,11 @@ void MainWindow::on_tags_edit_returnPressed()
 void MainWindow::on_open_database_triggered()
 {
     this->pw->load_all_from_database();
+    this->todo_after_path_walk();
+}
+
+void MainWindow::on_tags_select_returnPressed()
+{
+    this->pw->get_by_tags(this->ui->tags_select->text());
     this->todo_after_path_walk();
 }
