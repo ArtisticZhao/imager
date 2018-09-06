@@ -112,10 +112,15 @@ const QList<QString> *path_walker::get_all_albums()
     return &this->album_paths;
 }
 
+QList<QString> path_walker::get_all_tags()
+{
+    return this->db.get_all_tag();
+}
+
 void path_walker::save_albums()
 {
     for(int i=0;i<this->album_paths.length();i++){
-        this->db.check_insert(this->album_paths.at(i));
+        this->db.check_insert_path(this->album_paths.at(i));
     }
 }
 
@@ -126,7 +131,13 @@ QString path_walker::get_tags(const QString &path)
 
 void path_walker::save_tags(const QString &path, const QString &tags)
 {
+    // save to img_list
     this->db.set_tags(path, tags);
+    // save to tags_list
+    QStringList tag_list=tags.split(",");
+    for(int i=0;i<tag_list.length();i++){
+        this->db.check_insert_tag(tag_list.at(i));
+    }
 }
 
 void path_walker::get_by_tags(const QString &tags)

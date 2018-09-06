@@ -9,13 +9,17 @@ db_handler::db_handler()
     }else{
         qDebug()<<"Database Open Failed";
     }
-    if(!this->has_database()){
-        // 不存在存在数据库了
-        this->init_database();
+    if(!this->has_img_list()){
+        // 不存在图册数据库
+        this->create_img_list();
+    }
+    if(!this->has_tags_list()){
+        // 不存在标签数据库
+        this->create_tags_list();
     }
 }
 
-bool db_handler::has_database()
+bool db_handler::has_img_list()
 {
     QSqlQuery sql_query;
     bool is_table_exist = database.tables().contains(QLatin1String("img_list"));
@@ -23,7 +27,15 @@ bool db_handler::has_database()
     return is_table_exist;
 }
 
-void db_handler::init_database()
+bool db_handler::has_tags_list()
+{
+    QSqlQuery sql_query;
+    bool is_table_exist = database.tables().contains(QLatin1String("tags_list"));
+    qDebug()<<"check database exist: "<<is_table_exist;
+    return is_table_exist;
+}
+
+void db_handler::create_img_list()
 {
     /**
      * 初始化数据库,如果数据库不存在,则建立数据库,并创建数据表
@@ -38,7 +50,19 @@ void db_handler::init_database()
     }
 }
 
-bool db_handler::check_exist(const QString &path)
+void db_handler::create_tags_list()
+{
+    QSqlQuery sql_query;
+    sql_query.prepare("create table tags_list (tag varchar(200) primary key, visit_times int)");
+    if(!sql_query.exec()){
+        qDebug()<<"Table Create failed";
+        qDebug()<<sql_query.lastError();
+    }else{
+        qDebug()<<"Table Create success";
+    }
+}
+
+bool db_handler::check_exist_img(const QString &path)
 {
     bool exists = false;
     QSqlQuery checkQuery;
@@ -55,14 +79,53 @@ bool db_handler::check_exist(const QString &path)
     return exists;
 }
 
-bool db_handler::check_insert(const QString& path)
+bool db_handler::check_exist_tag(const QString &tag)
+{
+    bool exists = false;
+    QSqlQuery checkQuery;
+    checkQuery.prepare("SELECT tag FROM tags_list WHERE tag = (:tag)");
+    checkQuery.bindValue(":tag", tag);
+
+    if (checkQuery.exec()){
+        if (checkQuery.next()){
+            exists = true;
+        }
+    }else{
+        qDebug() << "check exists failed: " << checkQuery.lastError();
+    }
+    return exists;
+}
+
+bool db_handler::check_insert_path(const QString& path)
 {
     bool success = false;
     QSqlQuery query;
-    if(!this->check_exist(path)){
+    if(!this->check_exist_img(path)){
         // insert
         query.prepare("INSERT INTO img_list (path) VALUES (:path)");
         query.bindValue(":path", path);
+        if(query.exec()){
+           success = true;
+        }
+        else{
+            qDebug() << "insert error:  "
+                     << query.lastError();
+        }
+    }else{
+        qDebug() << "path already exist!";
+    }
+
+    return success;
+}
+
+bool db_handler::check_insert_tag(const QString &tag)
+{
+    bool success = false;
+    QSqlQuery query;
+    if(!this->check_exist_tag(tag)){
+        // insert
+        query.prepare("INSERT INTO tags_list (tag) VALUES (:tag)");
+        query.bindValue(":tag", tag);
         if(query.exec()){
            success = true;
         }
@@ -90,6 +153,22 @@ void db_handler::get_all_path(QList<QString> *path_walker_album_list)
         qDebug() << "insert error:  "
                  << query.lastError();
     }
+}
+
+QList<QString> db_handler::get_all_tag()
+{
+    QList<QString> tags_list;
+    QSqlQuery query;
+    query.prepare("SELECT tag FROM tags_list");
+    if(query.exec()){
+        while(query.next()){
+            tags_list.append(query.value(0).toString());
+        }
+    }else{
+        qDebug() << "insert error:  "
+                 << query.lastError();
+    }
+    return  tags_list;
 }
 
 QString db_handler::get_tags(const QString &path)
@@ -130,7 +209,6 @@ bool db_handler::set_tags(const QString &path, const QString &tags)
 void db_handler::get_by_tags(QList<QString> *path_walker_album_list, QString tags)
 {
     QStringList tag_list=tags.split(",");
-    qDebug()<<tag_list;
     if(tag_list.length()>0){
         // 如果tag_list 包含结果, 结果按照 'and' 关系 进行查询!
         path_walker_album_list->clear();

@@ -7,7 +7,7 @@
 #include <QLabel>
 #include "imager_ctrlor.h"
 #include "path_walker.h"
-
+#include "choose_tags_dialog.h"
 namespace Ui {
 class MainWindow;
 }
@@ -38,7 +38,9 @@ private slots:
 
     void on_open_database_triggered();
 
-    void on_tags_select_returnPressed();
+    void on_choose_tags_triggered();
+
+    void on_tags_select_triggered(const QString& tags);
 
 private:
     Ui::MainWindow *ui;
@@ -46,6 +48,7 @@ private:
     QMovie *gif=nullptr;
     imager_ctrlor *img_ctrlor;
     path_walker *pw;
+    choose_tags_dialog *dig = nullptr;
 
     void show_image(QString path);
     void updata_statusbar();

@@ -28,16 +28,19 @@ SOURCES += \
         mainwindow.cpp \
     path_walker.cpp \
     imager_ctrlor.cpp \
-    db_handler.cpp
+    db_handler.cpp \
+    choose_tags_dialog.cpp
 
 HEADERS += \
         mainwindow.h \
     path_walker.h \
     imager_ctrlor.h \
-    db_handler.h
+    db_handler.h \
+    choose_tags_dialog.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    choose_tags_dialog.ui
 
 RESOURCES += \
     ico.qrc

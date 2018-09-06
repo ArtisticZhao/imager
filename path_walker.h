@@ -29,6 +29,8 @@ public:
     void load_all_from_database();
     // 得到列表
     const QList<QString>* get_all_albums();
+    // 得到全部标签
+    QList<QString> get_all_tags();
     // 将当前扫描结果保存到数据库
     void save_albums();
     // 读取标签信息

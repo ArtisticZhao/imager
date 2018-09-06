@@ -15,7 +15,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
+    <item row="0" column="0">
      <widget class="QLabel" name="image_shower">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -40,7 +40,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="1" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <spacer name="horizontalSpacer">
@@ -61,7 +61,11 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>&lt;&lt;</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ico.qrc">
+          <normaloff>:/res/向左三角形.png</normaloff>:/res/向左三角形.png</iconset>
         </property>
         <property name="shortcut">
          <string>Ctrl+Left</string>
@@ -74,7 +78,11 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>&gt;&gt;</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ico.qrc">
+          <normaloff>:/res/向右三角形.png</normaloff>:/res/向右三角形.png</iconset>
         </property>
         <property name="shortcut">
          <string>Ctrl+Right</string>
@@ -90,7 +98,11 @@
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>&lt;-</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ico.qrc">
+          <normaloff>:/res/左箭头.png</normaloff>:/res/左箭头.png</iconset>
         </property>
         <property name="shortcut">
          <string>Left</string>
@@ -103,7 +115,11 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>-&gt;</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ico.qrc">
+          <normaloff>:/res/右箭头.png</normaloff>:/res/右箭头.png</iconset>
         </property>
         <property name="shortcut">
          <string>Right</string>
@@ -125,15 +141,8 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="0">
+    <item row="2" column="0">
      <widget class="QLineEdit" name="tags_edit">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLineEdit" name="tags_select">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -157,7 +166,14 @@
     <addaction name="open_path"/>
     <addaction name="open_database"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>数据库</string>
+    </property>
+    <addaction name="choose_tags"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -184,8 +200,21 @@
     <string>Ctrl+D</string>
    </property>
   </action>
+  <action name="choose_tags">
+   <property name="text">
+    <string>选择标签</string>
+   </property>
+   <property name="toolTip">
+    <string>选择标签...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="ico.qrc"/>
+ </resources>
  <connections/>
 </ui>

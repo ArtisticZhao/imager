@@ -96,7 +96,6 @@ void MainWindow::todo_after_path_walk()
     this->ui->pre_album->setEnabled(true);
     this->ui->next_album->setEnabled(true);
     this->ui->tags_edit->setEnabled(true);
-    this->ui->tags_select->setEnabled(true);
     // 载入第一张
     this->show_image(this->img_ctrlor->next_pic());
     this->updata_all_info();
@@ -162,8 +161,22 @@ void MainWindow::on_open_database_triggered()
     this->todo_after_path_walk();
 }
 
-void MainWindow::on_tags_select_returnPressed()
+void MainWindow::on_choose_tags_triggered()
 {
-    this->pw->get_by_tags(this->ui->tags_select->text());
+    if(this->dig != nullptr){
+        delete this->dig;
+    }
+    this->dig = new choose_tags_dialog();
+    this->dig->set_gen_checkbox(this->pw->get_all_tags());
+    this->dig->set_path_walker(this->pw);
+    // 绑定两个界面的消息
+    connect(dig,SIGNAL(send_selected_tags(const QString&)),this,SLOT(on_tags_select_triggered(const QString&)));
+    dig->show();
+}
+
+void MainWindow::on_tags_select_triggered(const QString& tags)
+{
+    qDebug()<<"in slot:"<<tags;
+    this->pw->get_by_tags(tags);
     this->todo_after_path_walk();
 }
