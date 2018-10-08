@@ -21,6 +21,7 @@ private:
     bool has_image(const QFileInfoList* qfl);
 public:
     path_walker();
+    bool is_emtry();
     // 返回图片集
     const QList<QString>* current_files(QString path);
     // 迭代查询数据, 数据将被保存在all_paths中

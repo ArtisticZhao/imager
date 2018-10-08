@@ -38,7 +38,7 @@ void MainWindow::show_image(QString path)
     // debug
     qDebug()<<path;
     // 显示图片
-    if(QString::compare(path, QString("tail")) && QString::compare(path, QString("head"))){
+    if(QString::compare(path, QString("tail")) && QString::compare(path, QString("head")) && QString::compare(path, QString("null"))){
         ui->right->setDisabled(false);
         ui->left->setDisabled(false);
         int w = ui->image_shower->width();
@@ -65,9 +65,15 @@ void MainWindow::show_image(QString path)
     }else if(path == QString("tail")){
         ui->image_shower->setText("已经是最后一张了!");
         ui->right->setDisabled(true);
-    }else{
+    }else if(path == QString("head")){
         ui->image_shower->setText("已经是第一张了!");
         ui->left->setDisabled(true);
+    }else{
+        ui->image_shower->setText("目录为空!");
+        ui->right->setDisabled(true);
+        ui->right->setDisabled(true);
+        ui->next_album->setDisabled(true);
+        ui->pre_album->setDisabled(true);
     }
 }
 
@@ -89,16 +95,21 @@ void MainWindow::updata_all_info()
 void MainWindow::todo_after_path_walk()
 {
     // 当path_walk 执行完毕后要调用这些内容
-    this->img_ctrlor->init_imager_ctrlor();
-    // 解除按钮限制
-    this->ui->left->setEnabled(true);
-    this->ui->right->setEnabled(true);
-    this->ui->pre_album->setEnabled(true);
-    this->ui->next_album->setEnabled(true);
-    this->ui->tags_edit->setEnabled(true);
-    // 载入第一张
-    this->show_image(this->img_ctrlor->next_pic());
-    this->updata_all_info();
+    if(!this->pw->is_emtry()){
+        this->img_ctrlor->init_imager_ctrlor();
+        // 解除按钮限制
+        this->ui->left->setEnabled(true);
+        this->ui->right->setEnabled(true);
+        this->ui->pre_album->setEnabled(true);
+        this->ui->next_album->setEnabled(true);
+        this->ui->tags_edit->setEnabled(true);
+        // 载入第一张
+        this->show_image(this->img_ctrlor->next_pic());
+        this->updata_all_info();
+    }else{
+        this->show_image("null");
+    }
+
 }
 
 void MainWindow::on_right_clicked()
@@ -176,7 +187,6 @@ void MainWindow::on_choose_tags_triggered()
 
 void MainWindow::on_tags_select_triggered(const QString& tags)
 {
-    qDebug()<<"in slot:"<<tags;
     this->pw->get_by_tags(tags);
     this->todo_after_path_walk();
 }

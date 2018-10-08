@@ -28,6 +28,14 @@ path_walker::path_walker()
 
 }
 
+bool path_walker::is_emtry()
+{
+    if(this->album_paths.length()==0){
+        return true;
+    }else
+        return false;
+}
+
 const QList<QString> *path_walker::current_files(QString path)
 {
     /*
